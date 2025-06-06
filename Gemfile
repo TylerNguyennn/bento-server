@@ -18,12 +18,19 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+
+#postgres DB
+gem 'pg', '~> 1.5'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
+
+gem 'concurrent-ruby', '1.3.4'
+
+gem "devise" 
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -41,7 +48,7 @@ group :development do
   # gem 'rack-mini-profiler', '~> 2.0' # not yet packaged for Debian
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'spring', '4.2.1'
 end
 
 group :test do
