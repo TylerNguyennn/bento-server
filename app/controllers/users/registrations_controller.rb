@@ -1,5 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token
+  before_action :configure_sign_up_params, only: [:create]
   respond_to :json
   private
 
@@ -14,5 +15,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
         status: {message: "User couldn't be created successfully. #{resource.errors.full_messages.to_sentence}"}
       }, status: :unprocessable_entity
     end
+  end
+
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :role])
   end
 end
