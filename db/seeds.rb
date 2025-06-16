@@ -10,7 +10,7 @@
 # db/seeds.rb
 
 # Giả sử đã có sẵn users (seller)
-seller = User.find_by(role: 'seller') || User.first
+seller =User.first
 
 Product.create!([
   {
@@ -56,3 +56,14 @@ Product.create!([
 ])
 
 puts "Seeded #{Product.count} products."
+
+# db/seeds.rb
+
+roles = ["admin", "seller", "buyer"]
+
+roles.each do |role_name|
+  Role.find_or_create_by!(name: role_name)
+end
+
+puts "✅ Seeded roles: #{roles.join(', ')}"
+

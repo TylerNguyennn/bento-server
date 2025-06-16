@@ -1,6 +1,9 @@
 class User < ApplicationRecord
-  validates :role, presence: true, inclusion: { in: %w(buyer seller admin) }
-  validates :name, presence: true
+  validates :last_name, presence: true
+
+  has_many :user_roles, dependent: :destroy
+  has_many :roles, through: :user_roles
+  
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
   devise :database_authenticatable, :registerable, :validatable,
