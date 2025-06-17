@@ -4,22 +4,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
   def create
+    role_name = params.dig(:user, :role)&.downcase || 'buyer'
+
+    unless %w[buyer seller].include?(role_name)
+      return render json: { error: "Invalid role" }, status: :forbidden
+    end
+
     build_resource(sign_up_params)
-    resource.save
 
-    if resource.persisted?
-
-      if params[:user][:role].present?
-        role_name = params.dig(:user, :role) || 'buyer'
-        role = Role.find_by(name: role_name)
-        resource.roles << role if role
-      end
-
+    if resource.save
+      role = Role.find_by(name: role_name)
+      resource.roles << role if role
       sign_up(resource_name, resource)
     end
 
     respond_with resource
   end
+
 
   private
 

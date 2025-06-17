@@ -242,6 +242,8 @@ GEM
       stringio
     puma (6.6.0)
       nio4r (~> 2.0)
+    pundit (2.5.0)
+      activesupport (>= 3.0.0)
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.16)
@@ -295,6 +297,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
+    rolify (6.0.1)
     rspec-core (3.13.4)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
@@ -440,8 +443,10 @@ DEPENDENCIES
   pg
   propshaft
   puma (>= 5.0)
+  pundit
   rack-cors
   rails (~> 8.0.2)
+  rolify
   rspec-rails
   rubocop-rails-omakase
   solid_cable
