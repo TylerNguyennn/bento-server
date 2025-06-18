@@ -50,6 +50,9 @@ gem 'filterrific'
 gem 'kaminari'
 gem 'pundit'
 gem 'rolify'
+gem 'image_processing', '>= 1.2'
+gem "aws-sdk-s3", require: false
+gem "azure-storage-blob", "~> 2.0", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

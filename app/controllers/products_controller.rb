@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :update, :destroy]
 
-  # GET /products
   def index
     filterrific = initialize_filterrific_instance or
       return render json: { error: 'Invalid filter params' }, status: :unprocessable_entity
@@ -11,7 +10,6 @@ class ProductsController < ApplicationController
     render json: render_products_json(products, filterrific)
   end
 
-  # GET /products/:id
   def show
     if @product.published? || current_user&.id == @product.seller_id
       render json: @product
@@ -20,10 +18,10 @@ class ProductsController < ApplicationController
     end
   end
 
-  # POST /products
   def create
     product = Product.new(product_params)
     product.seller_id = current_user.id
+
 
     if product.save
       render json: product, status: :created
@@ -32,7 +30,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/:id
   def update
     if @product.seller_id != current_user.id
       return render json: { error: 'Unauthorized' }, status: :unauthorized
@@ -45,7 +42,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/:id
   def destroy
     if @product.seller_id != current_user.id
       return render json: { error: 'Unauthorized' }, status: :unauthorized
@@ -85,7 +81,7 @@ class ProductsController < ApplicationController
       :thumbnail,
       :allowed,
       :published,
-      tag_list: [] # assuming acts_as_taggable_on
+      tag_list: []
     )
   end
 
