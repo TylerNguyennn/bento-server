@@ -50,6 +50,11 @@ gem 'filterrific'
 gem 'kaminari'
 gem 'pundit'
 gem 'rolify'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'google-id-token'
+gem 'dotenv-rails'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -64,6 +69,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 group :development do
