@@ -8,7 +8,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def create?
-    return true if user.has_role?(:seller)
+    true if user.has_role?(:seller)
   end
 
   def update?

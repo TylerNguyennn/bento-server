@@ -1,11 +1,11 @@
 class ProductsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_product, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :set_product, only: [ :show, :update, :destroy ]
 
   def index
     filterrific = initialize_filterrific_instance or
-      return render json: { error: 'Invalid filter params' }, status: :unprocessable_entity
+      return render json: { error: "Invalid filter params" }, status: :unprocessable_entity
 
     products = filterrific.find.page(params[:page]).per(10)
 
@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
 
   def update
     if @product.seller_id != current_user.id
-      return render json: { error: 'Unauthorized' }, status: :unauthorized
+      return render json: { error: "Unauthorized" }, status: :unauthorized
     end
 
     if @product.update(product_params)
@@ -46,11 +46,11 @@ class ProductsController < ApplicationController
 
   def destroy
     if @product.seller_id != current_user.id
-      return render json: { error: 'Unauthorized' }, status: :unauthorized
+      return render json: { error: "Unauthorized" }, status: :unauthorized
     end
 
     @product.destroy
-    render json: { message: 'Product deleted successfully' }
+    render json: { message: "Product deleted successfully" }
   end
 
   private
@@ -59,7 +59,7 @@ class ProductsController < ApplicationController
 
   def set_product
     @product = Product.find_by(id: params[:id])
-    render json: { error: 'Product not found' }, status: :not_found unless @product
+    render json: { error: "Product not found" }, status: :not_found unless @product
   end
 
   def initialize_filterrific_instance
@@ -91,7 +91,7 @@ class ProductsController < ApplicationController
 
   def render_products_json(products, filterrific)
     {
-      products: products.as_json(only: [:id, :title, :category, :price, :rating_avg]),
+      products: products.as_json(only: [ :id, :title, :category, :price, :rating_avg ]),
       pagination: {
         current_page: products.current_page,
         total_pages: products.total_pages,

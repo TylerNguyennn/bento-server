@@ -7,14 +7,14 @@ class Users::GoogleOauthController < ApplicationController
     validator = GoogleIDToken::Validator.new
 
     begin
-      payload = validator.check(id_token, ENV['GOOGLE_CLIENT_ID'])
+      payload = validator.check(id_token, ENV["GOOGLE_CLIENT_ID"])
 
       # Extract user info
-      email = payload['email']
-      uid = payload['sub']
-      provider = 'google_oauth2'
-      first_name = payload['given_name']
-      last_name = payload['family_name']
+      email = payload["email"]
+      uid = payload["sub"]
+      provider = "google_oauth2"
+      first_name = payload["given_name"]
+      last_name = payload["family_name"]
 
       user = User.find_or_initialize_by(email: email)
 
@@ -28,25 +28,25 @@ class Users::GoogleOauthController < ApplicationController
           confirmed_at: Time.current
         )
         user.save!
-        
+
         # Assign default role (optional)
-        role = Role.find_by(name: 'buyer')
+        role = Role.find_by(name: "buyer")
         user.roles << role if role
       end
 
       sign_in(user)
-      token = request.env['warden-jwt_auth.token']
+      token = request.env["warden-jwt_auth.token"]
 
       render json: {
-        status: { code: 200, message: 'Signed in successfully with Google.' },
+        status: { code: 200, message: "Signed in successfully with Google." },
         data: UserSerializer.new(user).serializable_hash[:data][:attributes],
         jwt: token
       }
 
     rescue GoogleIDToken::ValidationError => e
-      render json: { error: 'Invalid Google token', details: e.message }, status: :unauthorized
+      render json: { error: "Invalid Google token", details: e.message }, status: :unauthorized
     rescue => e
-      render json: { error: 'Authentication failed', details: e.message }, status: :unprocessable_entity
+      render json: { error: "Authentication failed", details: e.message }, status: :unprocessable_entity
     end
   end
 end
