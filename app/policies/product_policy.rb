@@ -4,10 +4,22 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def show?
-    false
+    true
   end
 
   def create?
-    false
+    return true if user.has_role?(:seller)
+  end
+
+  def update?
+    user&.has_role?(:seller) && record.seller_id == user.id
+  end
+
+  def edit?
+    update?
+  end
+
+  def destroy?
+    user&.has_role?(:seller) && record.seller_id == user.id
   end
 end

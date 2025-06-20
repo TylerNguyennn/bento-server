@@ -1,10 +1,9 @@
 class ProductsController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_product, only: [:show, :update, :destroy]
 
   def index
-    puts current_user.roles.inspect
-    authorize Product
     filterrific = initialize_filterrific_instance or
       return render json: { error: 'Invalid filter params' }, status: :unprocessable_entity
 
@@ -22,6 +21,7 @@ class ProductsController < ApplicationController
   end
 
   def create
+    authorize Product
     product = Product.new(product_params)
     product.seller_id = current_user.id
 
