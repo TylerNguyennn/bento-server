@@ -32,6 +32,11 @@ class Users::GoogleOauthController < ApplicationController
         # Assign default role (optional)
         role = Role.find_by(name: "buyer")
         user.roles << role if role
+      else
+        if user.provider != provider || user.uid != uid
+          user.update(provider: provider, uid: uid)
+        end
+        user.confirm unless user.confirmed?
       end
 
       sign_in(user)
