@@ -58,7 +58,6 @@ RSpec.describe "Authentication", type: :request do
     let!(:user) { create(:user, password: "password123") }
 
     it "logs out user with valid JWT" do
-
       post "/login", params: {
         user: {
           email: user.email,

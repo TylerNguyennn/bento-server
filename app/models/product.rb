@@ -8,7 +8,7 @@ class Product < ApplicationRecord
       :with_price_lte
     ]
   )
-  belongs_to :seller, class_name: 'User'
+  belongs_to :seller, class_name: "User"
 
   validates :title, :price, :category, presence: true
 

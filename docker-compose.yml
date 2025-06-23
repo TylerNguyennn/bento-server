@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: development
+      RAILS_MASTER_KEY: ${secret_key_base}
+      DATABASE_URL: postgres://postgres:postgres@db:5432/bento
+    volumes:
+      - .:/rails
+    command: ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3001"]
+    stdin_open: true
+    tty: true
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
