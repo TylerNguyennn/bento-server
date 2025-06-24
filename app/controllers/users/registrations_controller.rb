@@ -13,8 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     build_resource(sign_up_params)
 
     if resource.save
-      role = Role.find_by(name: role_name)
-      resource.roles << role if role
+      resource.assign_role(role_name)
       sign_up(resource_name, resource)
     end
 

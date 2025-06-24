@@ -8,7 +8,11 @@ class Product < ApplicationRecord
       :with_price_lte
     ]
   )
-  belongs_to :seller, class_name: "User"
+  belongs_to :seller, class_name: 'User'
+  belongs_to :category
+  has_many :asset_tags, foreign_key: :asset_id
+  has_many :tags, through: :asset_tags
+  has_many :order_items, foreign_key: :asset_id
 
   validates :title, :price, :category, presence: true
 
